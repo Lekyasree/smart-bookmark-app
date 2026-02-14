@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Smart Bookmark App
 
-First, run the development server:
+## Live Demo
+https://smart-bookmark-app-johu.vercel.app
 
-```bash
+## GitHub Repository
+https://github.com/Lekyasree/smart-bookmark-app
+
+##  Overview
+
+Smart Bookmark App is a real-time bookmark manager built using Next.js (App Router) and Supabase.
+Users can securely log in using Google OAuth and manage their personal bookmarks.  
+Each user's bookmarks are private and update in real-time across multiple tabs.
+
+##  Features
+- Google OAuth authentication (Supabase Auth)
+- Add bookmarks (Title + URL)
+- Delete bookmarks
+- Private bookmarks per user (Row Level Security enabled)
+- Real-time updates without refreshing
+- Fully deployed on Vercel
+
+##  Tech Stack
+- Next.js (App Router)
+- Supabase (Auth, Database, Realtime)
+- Tailwind CSS
+- Vercel (Deployment)
+- GitHub (Version Control)
+
+##Authentication
+- Only Google OAuth login is enabled.
+- No email/password authentication.
+- Session is stored securely via Supabase.
+
+##  Database Structure
+
+Table: `bookmarks`
+
+Columns:
+- id (uuid, primary key)
+- title (text)
+- url (text)
+- user_id (uuid, references auth.users)
+- created_at (timestamp)
+
+Row Level Security (RLS) ensures:
+- Users can only see their own bookmarks.
+- Users can only insert/delete their own bookmarks.
+
+## Real-Time Functionality
+
+Supabase Realtime is enabled on the `bookmarks` table.
+
+If a bookmark is added in one browser tab,
+it appears automatically in another tab without refreshing.
+
+##  Challenges Faced & Solutions
+
+### Google OAuth Redirect Issue
+Problem: After deployment, login redirected back to login page.  
+Solution: Configured correct Site URL and Redirect URLs in Supabase Authentication settings.
+
+### Supabase Environment Variables Missing During Build
+Problem: Vercel build failed due to undefined environment variables.  
+Solution: Added `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel Environment Variables settings.
+
+##  How to Run Locally
+git clone https://github.com/Lekyasree/smart-bookmark-app.git
+cd smart-bookmark-app
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
